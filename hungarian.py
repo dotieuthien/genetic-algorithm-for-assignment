@@ -96,8 +96,9 @@ def solve():
             classes_list) else classes_list[c_id]
         teacher_name = 'n/a' if t_id >= len(
             teachers_list) else teachers_list[t_id]
-        if priority != INF:
+        if class_name != 'n/a' and teacher_name  != 'n/a':
             count_assign += 1
+        if priority != INF:
             priority = priority if priority <= max_priority else priority - max_priority
             sum_priority += priority
 
