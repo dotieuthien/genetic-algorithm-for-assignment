@@ -2,9 +2,10 @@ import numpy as np
 
 from data import case_info, select_case_data
 
+np.random.seed()
 
 INF = 100
-TEST_CASE = 5  # 1-based indexing
+TEST_CASE = 6  # 1-based indexing
 courses_catalog, teachers_catalog, courses_teachers_priorities = select_case_data(
     TEST_CASE-1)
 case_info(courses_catalog, teachers_catalog, courses_teachers_priorities)
@@ -300,8 +301,9 @@ if __name__ == '__main__':
                         classes_list) else classes_list[c_id]
                     teacher_name = 'n/a' if t_id >= len(
                         teachers_list) else teachers_list[t_id]
-                    if priority != INF:
+                    if class_name != 'n/a' and teacher_name != 'n/a':
                         count_assign += 1
+                    if priority != INF:
                         priority = priority if priority <= max_priority else priority - max_priority
                         sum_priority += priority
 
