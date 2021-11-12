@@ -1,11 +1,13 @@
 import numpy as np
 
 from data import case_info, select_case_data
+import time
 
+start_time = time.time()
 np.random.seed()
 
 INF = 100
-TEST_CASE = 6  # 1-based indexing
+TEST_CASE = 1  # 1-based indexing
 courses_catalog, teachers_catalog, courses_teachers_priorities = select_case_data(
     TEST_CASE-1)
 case_info(courses_catalog, teachers_catalog, courses_teachers_priorities)
@@ -204,7 +206,7 @@ def regeneration(mutant, mutant_fitness, populasi, fitness):
     return populasi, fitness
 
 
-if __name__ == '__main__':
+def ga():
     num_teachers = 0
     teachers_list = []
     teachers_id_list = []
@@ -262,14 +264,16 @@ if __name__ == '__main__':
     rs, cs = np.where(cost_matrix == 0)
     cost_matrix[rs, cs] = INF
 
-    populasi, fitness = create_population(50, cost_matrix, basic_id_list, dummy_id)
+    populasi, fitness = create_population(
+        50, cost_matrix, basic_id_list, dummy_id)
     parent, parent_fitness = selection(populasi, fitness)
 
     stop_child = 100
     min_child_fitness = np.inf
 
     while True:
-        child, child_fitness = crossover(parent, cost_matrix, basic_id_list, dummy_id)
+        child, child_fitness = crossover(
+            parent, cost_matrix, basic_id_list, dummy_id)
         if child is None:
             parent, parent_fitness = selection(populasi, fitness)
             continue
@@ -279,7 +283,8 @@ if __name__ == '__main__':
             child_fitness = parent_fitness
             parent, parent_fitness = selection(populasi, fitness)
         else:
-            populasi, fitness = regeneration(child, child_fitness, populasi, fitness)
+            populasi, fitness = regeneration(
+                child, child_fitness, populasi, fitness)
             parent, parent_fitness = selection(populasi, fitness)
 
         print(bestfitness(child_fitness), min_child_fitness)
@@ -291,7 +296,7 @@ if __name__ == '__main__':
                 min_idx = np.argmin(child_fitness)
                 final_child = child[min_idx]
 
-                 # print result
+                # print result
                 sum_priority = 0
                 count_assign = 0
 
@@ -308,12 +313,17 @@ if __name__ == '__main__':
                         sum_priority += priority
 
                     print('{}\t{}\t{}\t{}'.format(c_id + 1, class_name, teacher_name,
-                                                int(priority) if priority != INF else 'n/a'))
+                                                  int(priority) if priority != INF else 'n/a'))
+                end_time = time.time()
                 print("count_assign:", count_assign)
                 print("sum_priority:", sum_priority)
+                print("time(s):{:.3f}".format(end_time-start_time))
                 break
 
             stop_child -= 1
 
         elif bestfitness(child_fitness) < min_child_fitness:
             min_child_fitness = bestfitness(child_fitness)
+
+if __name__ == '__main__':
+    ga()
