@@ -3,7 +3,7 @@ from scipy.optimize import linear_sum_assignment
 from data import case_info, select_case_data
 
 INF = 999
-TEST_CASE = 1  # 1-based indexing
+TEST_CASE = 7  # 1-based indexing
 courses_catalog, teachers_catalog, courses_teachers_priorities = select_case_data(
     TEST_CASE-1)
 case_info(courses_catalog, teachers_catalog, courses_teachers_priorities)

@@ -7,7 +7,7 @@ start_time = time.time()
 np.random.seed()
 
 INF = 100
-TEST_CASE = 1  # 1-based indexing
+TEST_CASE = 7  # 1-based indexing
 courses_catalog, teachers_catalog, courses_teachers_priorities = select_case_data(
     TEST_CASE-1)
 case_info(courses_catalog, teachers_catalog, courses_teachers_priorities)
@@ -295,6 +295,7 @@ def ga():
             if stop_child == 0:
                 min_idx = np.argmin(child_fitness)
                 final_child = child[min_idx]
+                print(final_child)
 
                 # print result
                 sum_priority = 0
